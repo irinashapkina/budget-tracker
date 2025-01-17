@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure--se4^b1qxn*jxe4!bp6uc%+-c&n-p=)7=t$c-p&t4)tg!8f8(9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 
-ALLOWED_HOSTS = ["d5dkmg1odlbnd9bcan2a.apigw.yandexcloud.net"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "bot",
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -100,17 +100,20 @@ WSGI_APPLICATION = "budget_tracker.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": "5432",
+        "NAME": "db1",
+        "USER": "user1",
+        "PASSWORD": "asdfghjk",
+        "HOST": "rc1a-4uah6w99uwxw7bhq.mdb.yandexcloud.net",
+        "PORT": "6432",
     }
 }
+
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
+
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -143,7 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "/api/static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
@@ -153,8 +156,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "app.User"
 
-MEDIA_URL = f"https://storage.yandexcloud.net/media-budget-tracker/category/"
-MEDIA_ROOT = MEDIA_URL
+MEDIA_URL = "/api/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_BOT_LOGIN = os.environ.get("TELEGRAM_BOT_LOGIN")
@@ -164,7 +167,7 @@ HOST_URL = os.environ.get("HOST_URL", "http://127.0.0.1:8000/")
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://localhost:3000"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "http://localhost:3000", "http://158.160.148.50"]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -197,9 +200,7 @@ SIMPLE_JWT = {
 }
 
 FRONTEND_URL = "http://localhost:5173/"
+
 AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
 AWS_STORAGE_BUCKET_NAME2 = os.environ.get("AWS_STORAGE_BUCKET_NAME2")
-
-if os.environ.get("AWS_ACCESS_KEY_ID"):
-    STORAGES = {"default": "storages.backends.s3boto3.S3Boto3Storage"}
